@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Le Swish Prophet</title>
+  <link rel="shortcut icon" href="{{ url_for('static', filename='img/kobe_favicon.png') }}">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/static/js/logic.js" defer></script>
+</head>
+<body class="min-h-screen font-sans bg-gradient-to-b from-[#000000] to-[#e17f23] text-[#dddddd]">
+  <div class="container mx-auto px-4 py-12 max-w-12xl">
+    <h1 class="text-5xl md:text-7xl font-bold text-center mb-10 text-[#dddddd] drop-shadow-lg">
+      Le Swish Prophet
+    </h1>
+
+    <!-- Last Update + Refresh Button -->
+    <div class="text-center mb-12">
+      <p class="text-xl mb-4 font-medium">
+        Last Data Update: 
+        <span id="last-update" class="font-bold text-[#dddddd]">Loading...</span>
+      </p>
+      <button id="update-btn" class="bg-[#000000] hover:bg-[#000000]/50 text-[#dddddd] px-8 py-4 rounded-xl font-semibold transition shadow-md hover:shadow-xl">
+        Update NBA Data
+      </button>
+    </div>
+
+    <!-- Team Selectors & Predictions -->
+    <div class="grid md:grid-cols-2 gap-8 mb-12">
+      <!-- Team 1 Card -->
+      <div class="bg-[#000000]/85 backdrop-blur-sm border border-[#000000]/40 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-6">
+          <label class="block text-xl font-semibold mb-3 text-[#dddddd]">Team 1</label>
+          <select id="selDataset" class="w-full p-4 bg-[#dddddd] text-[#000000] border border-[#000000]/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#dddddd]">
+            <option value="">Select Team</option>
+          </select>
+        </div>
+        <div class="px-6 pb-6">
+          <h3 id="team-lineup-header" class="text-lg font-semibold text-[#dddddd] mb-3"></h3>
+          <div id="player-name" class="grid grid-cols-1 gap-3"></div>
+          <div id="player-data" class="grid grid-cols-1 gap-3 mt-3"></div>
+        </div>
+        <div id="team-data" class="p-6 text-3xl font-bold text-center bg-[#de7e09]/50 border-t border-[#000000]/40"></div>
+      </div>
+
+      <!-- Team 2 Card -->
+      <div class="bg-[#000000]/85 backdrop-blur-sm border border-[#000000]/40 rounded-2xl shadow-2xl overflow-hidden">
+        <div class="p-6">
+          <label class="block text-xl font-semibold mb-3 text-[#dddddd]">Team 2</label>
+          <select id="selDataset2" class="w-full p-4 bg-[#dddddd] text-[#000000] border border-[#000000]/50 rounded-xl focus:outline-none focus:ring-2 focus:ring-[#dddddd]">
+            <option value="">Select Team</option>
+          </select>
+        </div>
+        <div class="px-6 pb-6">
+          <h3 id="team-lineup-header2" class="text-lg font-semibold text-[#dddddd] mb-3"></h3>
+          <div id="player-name2" class="grid grid-cols-1 gap-3"></div>
+          <div id="player-data2" class="grid grid-cols-1 gap-3 mt-3"></div>
+        </div>
+        <div id="team-data2" class="p-6 text-3xl font-bold text-center bg-[#de7e09]/50 border-t border-[#000000]/40"></div>
+      </div>
+    </div>
+
+    <!-- Calculate Button -->
+    <div class="text-center mb-12">
+      <button id="calc" class="bg-[#000000] hover:bg-[#000000]/50 text-[#dddddd] px-10 py-5 rounded-2xl text-xl font-bold transition shadow-lg hover:shadow-2xl">
+        Predict Outcome
+      </button>
+    </div>
+
+    <!-- Winner Display -->
+    <div id="winningteam" class="mt-12 text-center"></div>
+  </div>
+</body>
+</html>
