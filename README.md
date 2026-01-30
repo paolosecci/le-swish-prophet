@@ -3,6 +3,10 @@ is a web application designed to predict the outcomes of NBA games and outperfor
 
 ---
 
+### https://le-swish-prophet-7sfxstyvyq-wl.a.run.app
+
+---
+
 # GCP Deployment Info
 IAM needs "Cloud Build Service Account" permissions to run these
 
@@ -20,11 +24,11 @@ gcloud artifacts repositories create lsp-repo \
 ## For all redeploys
 
 ### 1. to create a docker image artifact from this repo
-gcloud builds submit --tag us-west2-docker.pkg.dev/le-swish-prophet-2026/lsp-repo/lsp-app:1.0 .
+gcloud builds submit --tag us-west2-docker.pkg.dev/le-swish-prophet-2026/lsp-repo/lsp-app:1.1 .
 
 ### 2. to deploy docker image to cloud run
 gcloud run deploy le-swish-prophet \
-  --image us-west2-docker.pkg.dev/le-swish-prophet/lsp-repo/lsp-app:1.6 \
+  --image us-west2-docker.pkg.dev/le-swish-prophet/lsp-repo/lsp-app:1.1 \
   --region us-west2 \
   --allow-unauthenticated \
   --port 8080
