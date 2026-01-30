@@ -1,10 +1,9 @@
-from flask import Flask, render_template, jsonify
+from flask import Flask, render_template, jsonify, request
 import datetime
 import json
 import pandas as pd
 from pytz import timezone
 import analyze_nba_data as nba_analyzer
-import localize_data as nba_data_updater
 
 app = Flask(__name__)
 last_nba_data_update = None
@@ -14,24 +13,32 @@ def le_swish_prophet():
     global last_nba_data_update
     return render_template("LeSwishProphet.html", last_data_update=last_nba_data_update)
 
-@app.route("/update")
-def le_swish_prophet_update():
+@app.route("/ingest", methods=["POST"])
+def ingest_nba_json_data():
+    data = request.get_json()
     global last_nba_data_update
-    pst_now = datetime.datetime.now(timezone('US/Pacific'))
-    if last_nba_data_update:
-        last_pst = last_nba_data_update.astimezone(timezone('US/Pacific'))
-        if last_pst.date() == pst_now.date():
-            return jsonify({"status": "already_updated", "last_update": last_nba_data_update.strftime("%Y-%m-%d %H:%M:%S PST")})
-
-    nba_data_updater.localize_data() # run ETL
-    last_nba_data_update = datetime.datetime.now()
-    return jsonify({"status": "updated", "last_update": last_nba_data_update.astimezone(timezone('US/Pacific')).strftime("%Y-%m-%d %H:%M:%S PST")})
+    if not data or "player_data" not in data or "team_data" not in data:
+        return jsonify({"error": "missing data"}), 400
+    try:
+        with open("data/nba_player_boxscores.json", "w") as f:
+            json.dump(data["player_data"], f)
+        with open("data/nba_team_boxscores.json", "w") as f:
+            json.dump(data["team_data"], f)
+        last_nba_data_update = datetime.datetime.now()
+        return jsonify({
+            "status": "successfully pushed nba data",
+            "last_update": last_nba_data_update.astimezone(timezone('US/Pacific')).strftime("%Y-%m-%d %H:%M:%S PST")
+        }), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 @app.route("/last-update")
 def get_last_update():
     global last_nba_data_update
     if last_nba_data_update:
-        return jsonify({"last_update": last_nba_data_update.astimezone(timezone('US/Pacific')).strftime("%Y-%m-%d %H:%M:%S PST")})
+        return jsonify({
+            "last_update": last_nba_data_update.astimezone(timezone('US/Pacific')).strftime("%Y-%m-%d %H:%M:%S PST")
+        })
     return jsonify({"last_update": "Never"})
 
 @app.route("/predict/<team>")

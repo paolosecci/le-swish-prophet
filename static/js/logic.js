@@ -63,20 +63,20 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
-// Refresh NBA data (keep as is, but add hide after success)
-updateBtn.addEventListener("click", async () => {
-  try {
-    document.getElementById("update-btn").textContent = "Hacking into NBA databases...<br>(exp. 1-2 minutes)";
-    const res = await fetch("/update");
-    const data = await res.json();
-    lastUpdateEl.textContent = "Today";
-    updateBtn.style.display = "none"; // hide after update
-    alert("NBA Data Mining Operation: SUCCESS");
-  } catch (err) {
-    console.error("Update failed:", err);
-    alert("Failed to update data. Check console for error info.");
-  }
-});
+// // Refresh NBA data (keep as is, but add hide after success)
+// updateBtn.addEventListener("click", async () => {
+//   try {
+//     document.getElementById("update-btn").textContent = "Hacking into NBA databases...";
+//     const res = await fetch("/update");
+//     const data = await res.json();
+//     lastUpdateEl.textContent = "Today";
+//     updateBtn.style.display = "none"; // hide after update
+//     alert("NBA Data Mining Operation: SUCCESS");
+//   } catch (err) {
+//     console.error("Update failed:", err);
+//     alert("Failed to update data. Check console for error info.");
+//   }
+// });
 
 // Team 1 selection
 select1.addEventListener("change", async (e) => {
