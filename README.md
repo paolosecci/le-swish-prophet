@@ -28,7 +28,8 @@ gcloud builds submit --tag us-west2-docker.pkg.dev/le-swish-prophet-2026/lsp-rep
 
 ### 2. to deploy docker image to cloud run
 gcloud run deploy le-swish-prophet \
-  --image us-west2-docker.pkg.dev/le-swish-prophet/lsp-repo/lsp-app:1.1 \
+  --image us-west2-docker.pkg.dev/le-swish-prophet-2026/lsp-repo/lsp-app:1.1 \
   --region us-west2 \
   --allow-unauthenticated \
-  --port 8080
+  --port 8080 \
+  --timeout 600s
